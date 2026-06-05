@@ -1,0 +1,41 @@
+version: "3.9"
+
+# Production stack — runs on the VPS.
+# Both postgres (RDS) and Redis (ElastiCache) are AWS managed — no containers for either.
+# Run with: docker compose -f infra/docker-compose.prod.yml up -d
+
+services:
+
+  api:
+    image: ghcr.io/yourorg/idea-backend:latest
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      # ── AWS RDS ────────────────────────────────────────────────────────────
+      DB_HOST: ${DB_HOST}           # e.g. xxxx.us-east-1.rds.amazonaws.com
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      # ── AWS ElastiCache ────────────────────────────────────────────────────
+      REDIS_HOST: ${REDIS_HOST}     # e.g. xxxx.serverless.use1.cache.amazonaws.com
+      REDIS_AUTH_TOKEN: ${REDIS_AUTH_TOKEN:}   # optional — only if auth is enabled
+      # ── App ────────────────────────────────────────────────────────────────
+      JWT_SECRET: ${JWT_SECRET}
+    networks: [internal]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    networks: [internal]
+
+networks:
+  internal:
+
+volumes:
+  caddy_data:
