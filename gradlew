@@ -6,7 +6,7 @@ APP_BASE_NAME=$(basename "$0")
 APP_HOME=$(cd "$(dirname "$0")" && pwd -P)
 
 GRADLE_OPTS="${GRADLE_OPTS:-"-Xmx64m -Xms64m"}"
-DEFAULT_JVM_OPTS='-Dfile.encoding=UTF-8 "-Xmx64m" "-Xms64m"'
+DEFAULT_JVM_OPTS='-Dfile.encoding=UTF-8' '-Xmx64m' '-Xms64m'
 
 set -e
 

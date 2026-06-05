@@ -24,7 +24,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Build
-        run: ./gradlew clean build -x test
+        run: ./gradlew clean build
 
   test:
     name: Unit Tests
