@@ -105,22 +105,20 @@ idea-backend/
 ├── .env.example
 ├── .gitignore
 ├── .github/workflows/ci.yml             Test → build → push → deploy
-|        
-src/main/java/com/idea/
-├── config/        SecurityConfig (JWT filter chain, BCrypt bean), RedisConfig (ElastiCache TLS)
-├── controller/    HelloController, AuthController (POST /auth/register + /auth/login)
-├── dao/           UserRepository (Spring Data JPA)
-├── entity/        User + enums
-├── exception/     GlobalExceptionHandler
-└── security/      JwtService (Generate + validate tokens), JwtAuthFilter (OncePerRequestFilter), UserDetailsServiceImpl (Loads user from DB)
-|
-src/main/resources/
-├── application.yml          prod defaults — TLS on, REDIS_HOST required
-├── application-dev.yml      local overrides — TLS off, localhost redis
-└── db/migration/V1__init.sql
-|
-infra/
-├── Caddyfile      (yourdomain.com → api:8080 + auto SSL)
-└── docker-compose.prod.yml  api + caddy only (RDS + ElastiCache are AWS managed)
+├── src/main/java/com/idea/
+    ├── config/        SecurityConfig (JWT filter chain, BCrypt bean), RedisConfig (ElastiCache TLS)
+    ├── controller/    HelloController, AuthController (POST /auth/register + /auth/login)
+    ├── dao/           UserRepository (Spring Data JPA)
+    ├── entity/        User + enums
+    ├── exception/     GlobalExceptionHandler
+    └── security/      JwtService (Generate + validate tokens), JwtAuthFilter (OncePerRequestFilter), UserDetailsServiceImpl (Loads user from DB)
+├──src/main/resources/
+    ├── application.yml          prod defaults — TLS on, REDIS_HOST required
+    ├── application-dev.yml      local overrides — TLS off, localhost redis
+    └── db/migration/V1__init.sql
+
+├──infra/
+    ├── Caddyfile      (yourdomain.com → api:8080 + auto SSL)
+    └── docker-compose.prod.yml  api + caddy only (RDS + ElastiCache are AWS managed)
 
 ```
