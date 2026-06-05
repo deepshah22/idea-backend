@@ -2,22 +2,23 @@
 FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
-COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw .
+# copy wrapper + build files first (cached layer)
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle.kts settings.gradle.kts ./
 
-# download dependencies first (cached layer)
-RUN ./mvnw dependency:go-offline -q
+RUN chmod +x gradlew && ./gradlew dependencies --no-daemon -q
 
+# copy source and build
 COPY src ./src
-RUN ./mvnw package -DskipTests -q
+RUN ./gradlew bootJar --no-daemon -q
 
 # ── runtime ───────────────────────────────────────────────────────────────────
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 RUN addgroup -S app && adduser -S app -G app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/build/libs/app.jar app.jar
 RUN chown app:app app.jar
 
 USER app
