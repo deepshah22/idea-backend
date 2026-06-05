@@ -99,19 +99,28 @@ Edit `infra/Caddyfile` with your real domain — SSL is automatic via Let's Encr
 ## Project layout
 
 ```
-├── build.gradle.kts           Gradle build (Kotlin DSL)
-├── settings.gradle.kts        Project name
-├── gradlew / gradlew.bat      Gradle wrapper
-├── Dockerfile                 Multi-stage build
-├── docker-compose.yml         Local dev (postgres + redis + api)
-├── infra/
-│   ├── Caddyfile
-│   └── docker-compose.prod.yml   prod (api + caddy only — RDS + ElastiCache are AWS managed)
-└── src/main/java/com/idea/
-    ├── config/        SecurityConfig, RedisConfig
-    ├── controller/    HelloController, AuthController
-    ├── dao/           UserRepository (Spring Data JPA)
-    ├── entity/        User + enums
-    ├── exception/     GlobalExceptionHandler
-    └── security/      JwtService, JwtAuthFilter, UserDetailsServiceImpl
+idea-backend/
+├── Dockerfile                           Multi-stage, non-root
+├── docker-compose.yml                   Local dev (postgres + redis + api)
+├── .env.example
+├── .gitignore
+├── .github/workflows/ci.yml             Test → build → push → deploy
+|        
+src/main/java/com/idea/
+├── config/        SecurityConfig (JWT filter chain, BCrypt bean), RedisConfig (ElastiCache TLS)
+├── controller/    HelloController, AuthController (POST /auth/register + /auth/login)
+├── dao/           UserRepository (Spring Data JPA)
+├── entity/        User + enums
+├── exception/     GlobalExceptionHandler
+└── security/      JwtService (Generate + validate tokens), JwtAuthFilter (OncePerRequestFilter), UserDetailsServiceImpl (Loads user from DB)
+|
+src/main/resources/
+├── application.yml          prod defaults — TLS on, REDIS_HOST required
+├── application-dev.yml      local overrides — TLS off, localhost redis
+└── db/migration/V1__init.sql
+|
+infra/
+├── Caddyfile      (yourdomain.com → api:8080 + auto SSL)
+└── docker-compose.prod.yml  api + caddy only (RDS + ElastiCache are AWS managed)
+
 ```
