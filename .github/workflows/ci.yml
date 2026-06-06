@@ -70,9 +70,9 @@ jobs:
           JWT_SECRET: test-secret-key-for-ci-only-min-32-chars
 
       - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v4
+        uses: dorny/test-reporter@v1
         if: always()
         with:
-          report_paths: build/test-results/test/*.xml
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: JUnit Tests
+          path: build/test-results/test/*.xml
+          reporter: java-junit
