@@ -37,7 +37,7 @@ public class HelloController {
     /** Protected endpoint — requires a valid JWT. */
     @GetMapping("/me")
     public ResponseEntity<Map<String, Object>> me(
-        org.springframework.security.core.annotation.AuthenticationPrincipal
+        @org.springframework.security.core.annotation.AuthenticationPrincipal
         org.springframework.security.core.userdetails.UserDetails principal
     ) {
         return ResponseEntity.ok(Map.of(

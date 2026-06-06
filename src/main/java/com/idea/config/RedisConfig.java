@@ -53,8 +53,9 @@ public class RedisConfig {
         if (tlsEnabled) {
             // ElastiCache presents a valid AWS-signed cert — no custom trust store needed
             clientConfig = LettuceClientConfiguration.builder()
-                .useSsl()
                 .commandTimeout(Duration.ofSeconds(5))
+                .useSsl()
+                .and()
                 .build();
         } else {
             // local dev (plain Redis via docker-compose)

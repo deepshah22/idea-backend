@@ -27,7 +27,7 @@ class HelloControllerTest {
 
     @Test
     void hello_returnsOkAndUserCount() throws Exception {
-        mvc.perform(get("/api/v1/hello"))
+        mvc.perform(get("/hello"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.message").value("idea-backend is running"))
             .andExpect(jsonPath("$.userCount").isNumber());
@@ -35,7 +35,7 @@ class HelloControllerTest {
 
     @Test
     void me_withoutToken_returns401() throws Exception {
-        mvc.perform(get("/api/v1/hello/me"))
+        mvc.perform(get("/hello/me"))
             .andExpect(status().isUnauthorized());
     }
 }
