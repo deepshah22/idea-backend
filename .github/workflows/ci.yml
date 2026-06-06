@@ -74,3 +74,5 @@ jobs:
         if: always()
         with:
           report_paths: build/test-results/test/*.xml
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
