@@ -25,8 +25,8 @@ repositories {
     mavenCentral()
 }
 
-extra["jjwtVersion"] = "0.12.5"
-extra["springdocVersion"] = "2.5.0"
+val jjwtVersion = "0.12.5"
+val springdocVersion = "2.5.0"
 
 dependencies {
 
@@ -36,9 +36,9 @@ dependencies {
 
     // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt-api:${extra["jjwtVersion"]}")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:${extra["jjwtVersion"]}")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:${extra["jjwtVersion"]}")
+    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
 
     // Data / JPA
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -56,7 +56,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     // API Docs
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${extra["springdocVersion"]}")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 
     // Actuator
     implementation("org.springframework.boot:spring-boot-starter-actuator")
