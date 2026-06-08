@@ -18,9 +18,10 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       # ── AWS ElastiCache ────────────────────────────────────────────────────
       REDIS_HOST: ${REDIS_HOST}     # e.g. xxxx.serverless.use1.cache.amazonaws.com
-      REDIS_AUTH_TOKEN: ${REDIS_AUTH_TOKEN:}   # optional — only if auth is enabled
+      REDIS_AUTH_TOKEN: ${REDIS_AUTH_TOKEN:-}   # optional — only if auth is enabled
       # ── App ────────────────────────────────────────────────────────────────
       JWT_SECRET: ${JWT_SECRET}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
     networks: [internal]
 
   caddy:
