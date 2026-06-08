@@ -30,7 +30,18 @@ spring:
       # AUTH token — set only if your ElastiCache cluster has auth enabled
       password: ${REDIS_AUTH_TOKEN:}
       ssl:
-        enabled: true   # ElastiCache always requires TLS in production
+        enabled: true
+
+langchain4j:
+  open-ai:
+    chat-model:
+      api-key: ${OPENAI_API_KEY}
+      model-name: gpt-4o-mini
+      temperature: 0.7
+      max-tokens: 1000
+    embedding-model:
+      api-key: ${OPENAI_API_KEY}
+      model-name: text-embedding-3-small
 
 server:
   port: 8080
@@ -40,8 +51,14 @@ server:
 app:
   jwt:
     secret: ${JWT_SECRET:change-me-in-production-must-be-32-chars!}
-    expiration-ms: 86400000       # 24 h
-    refresh-expiration-ms: 604800000  # 7 d
+    expiration-ms: 86400000  # 24 hours
+    refresh-expiration-ms: 604800000 # 7 days
+
+  ai:
+    cache-ttl-seconds: 86400             # 24h — AI response cache in ElastiCache
+    embedding-cache-ttl-seconds: 604800  # 7d  — embedding vector cache
+    similarity-threshold: 0.70           # minimum cosine similarity to return a result
+    max-results: 5                       # top-N docs returned per query
 
 springdoc:
   api-docs:
@@ -58,3 +75,4 @@ management:
 logging:
   level:
     com.idea: DEBUG
+    dev.langchain4j: INFO

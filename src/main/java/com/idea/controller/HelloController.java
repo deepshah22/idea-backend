@@ -13,8 +13,8 @@ import java.util.Map;
 /**
  * Hello World controller — demonstrates a live DB read.
  *
- * GET /api/v1/hello        → public, no auth needed
- * GET /api/v1/hello/me     → protected, requires Bearer token
+ * GET /hello        → public, no auth needed
+ * GET /hello/me     → protected, requires Bearer token
  */
 @RestController
 @RequestMapping("/hello")

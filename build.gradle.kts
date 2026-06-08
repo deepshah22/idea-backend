@@ -27,6 +27,7 @@ repositories {
 
 val jjwtVersion = "0.12.5"
 val springdocVersion = "2.5.0"
+val langchain4jVersion = "0.32.0"
 
 dependencies {
 
@@ -36,9 +37,9 @@ dependencies {
 
     // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
+    implementation("io.jsonwebtoken:jjwt-api:${jjwtVersion}")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:${jjwtVersion}")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:${jjwtVersion}")
 
     // Data / JPA
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -51,22 +52,31 @@ dependencies {
     // Redis (ElastiCache)
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
+    // LangChain4j — Spring Boot starter (wires beans automatically)
+    implementation("dev.langchain4j:langchain4j-spring-boot-starter:${langchain4jVersion}")
+
+    // LangChain4j — OpenAI (chat + embeddings)
+    implementation("dev.langchain4j:langchain4j-open-ai-spring-boot-starter:${langchain4jVersion}")
+
+    // LangChain4j — pgvector embedding store
+    implementation("dev.langchain4j:langchain4j-pgvector:${langchain4jVersion}")
+
     // Lombok
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
     // API Docs
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}")
 
     // Actuator
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")  // @ServiceConnection
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:postgresql")                         // pgvector/pgvector:pg16
     testCompileOnly("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
 }

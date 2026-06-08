@@ -31,8 +31,24 @@ server:
   servlet:
     context-path: /api/v1
 
+langchain4j:
+  open-ai:
+    chat-model:
+      api-key: test-dummy-key
+      model-name: gpt-4o-mini
+      temperature: 0.7
+      max-tokens: 1000
+    embedding-model:
+      api-key: test-dummy-key
+      model-name: text-embedding-3-small
+
 app:
   jwt:
     secret: test-secret-key-for-testing-only-32chars!
     expiration-ms: 86400000
     refresh-expiration-ms: 604800000
+  ai:
+    cache-ttl-seconds: 86400
+    embedding-cache-ttl-seconds: 604800
+    similarity-threshold: 0.70
+    max-results: 5
