@@ -62,15 +62,18 @@ docker compose up --build
 
 ## Environment variables
 
-See `.env.example`. Key ones:
-
-| Variable | Default | Notes |
-|---|---|---|
-| `DB_HOST` | localhost | RDS endpoint in prod |
-| `DB_PASSWORD` | change-me | |
-| `REDIS_HOST` | localhost | ElastiCache endpoint in prod |
-| `REDIS_AUTH_TOKEN` | _(empty)_ | Only if ElastiCache auth is enabled |
-| `JWT_SECRET` | — | Min 32 chars — generate: `openssl rand -base64 32` |
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `DB_HOST` | prod only | `localhost` | RDS PostgreSQL endpoint |
+| `DB_PORT` | no | `5432` | PostgreSQL port |
+| `DB_NAME` | no | `ideadb` | Database name |
+| `DB_USER` | no | `app` | Database username |
+| `DB_PASSWORD` | yes | — | Database password |
+| `REDIS_HOST` | yes | — | ElastiCache endpoint (TLS required in prod) |
+| `REDIS_PORT` | no | `6379` | Redis port |
+| `REDIS_AUTH_TOKEN` | no | _(empty)_ | Redis AUTH password — set only if ElastiCache auth is enabled |
+| `JWT_SECRET` | yes | — | Min 32 chars — generate: `openssl rand -base64 32` |
+| `OPENAI_API_KEY` | yes | — | OpenAI API key for chat and embeddings |
 
 ## Tests
 
@@ -95,6 +98,7 @@ Edit `infra/Caddyfile` with your real domain — SSL is automatic via Let's Encr
 | `VPS_HOST` | Server IP or hostname |
 | `VPS_USER` | SSH user |
 | `VPS_SSH_KEY` | Private SSH key |
+| `OPENAI_API_KEY` | OpenAI API key — passed to the container at deploy time |
 
 ## Project layout
 
