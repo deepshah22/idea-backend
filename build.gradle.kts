@@ -27,7 +27,7 @@ repositories {
 
 val jjwtVersion = "0.12.5"
 val springdocVersion = "2.5.0"
-val langchain4jVersion = "0.32.0"
+val langchain4jVersion = "0.36.2"
 
 dependencies {
 
